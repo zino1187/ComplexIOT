@@ -57,7 +57,10 @@ var netServer=net.createServer(function(socket){
 		console.log("소켓 클라이언트 메세지:", msg.toString());		
 		
 		//소켓으로 받은 데이터를 소켓,웹소켓 클라이언트들에게 동시에 브로드케스팅한다
-		send(msg);
+		if(msg!="close") //이 조건 처리를 하지 않으면, 클라이언트의 소켓이 닫힐때도 메세지가 날아오게 되는데,
+								// 아래의  send를 호출해버리게 되면 닫힌 소켓을 대상으로  write 를 하게 되므로, 에러가
+								//발생하게 된다.
+			send(msg);
 	});
 	
 	socket.on("close", function(){
