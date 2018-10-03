@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+var socket;
+
+$(function(){
+	socket=io();//접속
+
+	$("button").click(function(){
+		var msg=$("input").val();
+
+		socket.emit("message", msg+"\n");//서버에 전송 
+	});
+
+	socket.on("message", function(data){
+		$("h1").text(data);
+	});
+});
+</script>
+</head>
+<body>
+	<button>on</button>
+	<input type="text">
+	<h1>여기에 뭐가 들어올까?</h1>
+</body>
+</html>
+
